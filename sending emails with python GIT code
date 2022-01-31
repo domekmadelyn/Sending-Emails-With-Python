@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Jan 30 20:12:10 2022
+
+@author: maddydomek
+"""
+
+import smtplib, ssl
+
+# input your email infoarmtion, as well as your subject and body text
+port = 587  # For starttls
+smtp_server = "smtp.office365.com"
+sender_email = "your@email.com"
+receiver_email = "their@email.com"
+password = "email account PW"
+message = """\
+Subject: This is your #Subject
+
+This is your body text."""
+
+context = ssl.create_default_context()
+with smtplib.SMTP(smtp_server, port) as server:
+    server.ehlo()  # Can be omitted
+    server.starttls(context=context)
+    # server.ehlo()  # Can be omitted
+    server.login(sender_email, password)
+    server.sendmail(sender_email, receiver_email, message)
+
+# Thank You 
+# https://realpython.com/python-send-email/
+# https://stackoverflow.com/questions/57715289/how-to-fix-ssl-sslerror-ssl-wrong-version-number-wrong-version-number-ssl
